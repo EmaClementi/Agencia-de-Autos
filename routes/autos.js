@@ -4,12 +4,43 @@ const Auto = require('../models/Auto');
 
 router.get('/', async (req, res) => {
   try {
-    const autos = await Auto.find({ disponible: true });
+    const { search, sort, tipo } = req.query; // Obtener el tipo desde los parámetros de la query
+    let query = { disponible: true };
+
+    // Filtrar por tipo de auto (alquilar o comprar)
+    if (tipo) {
+      query = { ...query, tipo }; // Agregar el tipo a la consulta
+    }
+
+    // Si se proporciona un término de búsqueda, ajusta la consulta
+    if (search) {
+      query = {
+        ...query,
+        $or: [
+          { modelo: { $regex: search, $options: 'i' } }, // Búsqueda por modelo (insensible a mayúsculas)
+          { marca: { $regex: search, $options: 'i' } }   // Búsqueda por marca
+        ]
+      };
+    }
+
+    // Ejecutar la consulta con el filtro
+    let autos = await Auto.find(query);
+
+    // Ordenar por precio si se proporciona el parámetro de orden
+    if (sort === 'precio_asc') {
+      autos = autos.sort((a, b) => a.precio - b.precio); // Orden ascendente
+    } else if (sort === 'precio_desc') {
+      autos = autos.sort((a, b) => b.precio - a.precio); // Orden descendente
+    }
+
     res.json(autos);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+
+
 
 router.get('/:id', async (req, res) => {
   try {

@@ -10,8 +10,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+    
 })
 .then(() => console.log('Conectado a MongoDB Atlas'))
 .catch(err => console.error('Error de conexión:', err));
