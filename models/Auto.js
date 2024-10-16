@@ -6,7 +6,11 @@ const AutoSchema = new mongoose.Schema({
   año: { type: Number, required: true },
   tipo: { type: String, enum: ['compra', 'alquiler'], required: true },
   precio: { type: Number, required: true },
-  disponible: { type: Boolean, default: true },
+  status: {
+    type: String,
+    enum: ['disponible', 'alquilado', 'vendido'],
+    default: 'disponible',
+  },
   detalles: { type: String },
   imagenes: [{ type: String }] // URLs de imágenes
 });

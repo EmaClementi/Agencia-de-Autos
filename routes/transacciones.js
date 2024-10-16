@@ -23,12 +23,15 @@ router.get('/:id', async (req, res) => {
 });
   
 router.post('/', async (req, res) => {
+  const { clienteId, autoId, tipoTransaccion } = req.body;
+
+  // Asegúrate de que no estés verificando 'estado' si no es necesario
+
   try {
     const nuevaTransaccion = new Transaccion({
       cliente: req.body.cliente,
       auto: req.body.auto,
-      tipo: req.body.tipo,
-      estado: req.body.estado,
+      tipo: req.body.tipo
     });
 
     const transaccionGuardada = await nuevaTransaccion.save();

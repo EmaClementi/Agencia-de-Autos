@@ -74,6 +74,47 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.put('/:id/alquiler', async (req, res) => {
+  try {
+    const autoActualizado = await Auto.findByIdAndUpdate(
+      req.params.id,
+      { status: 'alquilado' },
+      { new: true }
+    );
+    if (!autoActualizado) return res.status(404).json({ message: 'Auto no encontrado' });
+    res.json(autoActualizado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Marcar un auto como vendido
+router.put('/:id/compra', async (req, res) => {
+  try {
+    const autoActualizado = await Auto.findByIdAndUpdate(
+      req.params.id,
+      { status: 'vendido' },
+      { new: true }
+    );
+    if (!autoActualizado) return res.status(404).json({ message: 'Auto no encontrado' });
+    res.json(autoActualizado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+router.put('/:id/disponible', async (req, res) => {
+  try {
+    const autoActualizado = await Auto.findByIdAndUpdate(
+      req.params.id,
+      { status: 'disponible' },
+      { new: true }
+    );
+    if (!autoActualizado) return res.status(404).json({ message: 'Auto no encontrado' });
+    res.json(autoActualizado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 router.delete('/:id', async (req, res) => {

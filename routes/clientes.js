@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
         dni: req.body.dni,
         telefono: req.body.telefono,
       });
-  
+      console.log(nuevoCliente);
       const clienteGuardado = await nuevoCliente.save();
       res.status(201).json(clienteGuardado);
     } catch (error) {
