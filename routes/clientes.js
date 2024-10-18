@@ -152,7 +152,6 @@ router.put('/:dni', async (req, res) => {
     const cliente = await Cliente.findOne({ dni: req.params.dni });
     if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
 
-    // Actualizar los campos del cliente
     cliente.nombre = req.body.nombre || cliente.nombre;
     cliente.apellido = req.body.apellido || cliente.apellido;
     cliente.email = req.body.email || cliente.email;
